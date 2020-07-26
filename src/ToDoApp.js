@@ -10,6 +10,7 @@ class ToDoApp extends React.Component{
             todos : todosData
         }
         this.handleClick = this.handleClick.bind(this)
+        this.handleText = this.handleText.bind(this)
     }
     handleClick(id){
         this.setState(prevState =>{
@@ -26,9 +27,20 @@ class ToDoApp extends React.Component{
             return tempState
         })
     }
+    handleText(id){
+        let i=0;
+        for(i=0; i<this.state.todos.length; i++){
+            if(this.state.todos[i].id === id){
+                if(this.state.todos[i].completed === true){
+                    return <del> {this.state.todos[i].text} </del>;
+                }
+                return this.state.todos[i].text;
+            }
+        }
+    }
     render(){
         const itemComponents = this.state.todos.map(item =>{
-            return <ToDoItem ToDoItemObj = {item} key = {item.id} handleClick={this.handleClick}/>
+            return <ToDoItem ToDoItemObj = {item} key = {item.id} handleClick={this.handleClick} handleText={this.handleText}/>
         })
         return(
         <div className="divbg">
