@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TestApp from './testApp.js';
+import ToDoApp from './ToDoApp.js'
 
 ReactDOM.render(
-  <TestApp />,
+  <ToDoApp />,
   document.getElementById('root')
 );
