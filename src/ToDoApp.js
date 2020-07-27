@@ -1,51 +1,61 @@
 import React from 'react'
 import './style.css'
 import ToDoItem from './ToDoItem.js'
-import todosData from './todosData.js'
 
 class ToDoApp extends React.Component{
     constructor(){
         super()
         this.state = {
-            todos : todosData
+            todos : []
         }
-        this.handleClick = this.handleClick.bind(this)
-        this.handleText = this.handleText.bind(this)
     }
-    handleClick(id){
+    componentDidMount(){
+        fetch('http://localhost:50806/api/TodoItem',{
+            mode: 'cors'
+        })
+            .then(response => response.json())
+            .then(data => this.setState({
+                todos: data
+            }))
+    }
+    handleClick = (id) =>{
         this.setState(prevState =>{
             let i
             let tempState = {
-                todos: todosData
+                todos: this.state.todos
             }
             for(i=0; i<prevState.todos.length; i++){
                 tempState.todos[i]=prevState.todos[i];
                 if(prevState.todos[i].id === id){
-                    tempState.todos[i].completed = !prevState.todos[i].completed;
+                    tempState.todos[i].status = !prevState.todos[i].status;
                 }
             }
             return tempState
         })
     }
-    handleText(id){
-        let i=0;
-        for(i=0; i<this.state.todos.length; i++){
-            if(this.state.todos[i].id === id){
-                if(this.state.todos[i].completed === true){
-                    return <del> {this.state.todos[i].text} </del>;
-                }
-                return this.state.todos[i].text;
-            }
-        }
+
+    handleSubmit = () => {
+        console.log("Clicked")
+        console.log(JSON.stringify(this.state.todos))
+        fetch('http://localhost:50806/api/TodoItem/batch',{
+            mode: 'cors',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.todos)
+        })
     }
+    
     render(){
         const itemComponents = this.state.todos.map(item =>{
-            return <ToDoItem ToDoItemObj = {item} key = {item.id} handleClick={this.handleClick} handleText={this.handleText}/>
+            return <ToDoItem ToDoItemObj = {item} key = {item.id} handleClick={this.handleClick}/>
         })
         return(
         <div className="divbg">
             <h1 className="header">To-do list</h1>
             {itemComponents}
+            <button style={{cursor: "pointer"}} className="button" onClick={this.handleSubmit}>Submit</button>
         </div>
         )   
     }
