@@ -35,8 +35,6 @@ class ToDoApp extends React.Component{
     }
 
     handleSubmit = () => {
-        console.log("Clicked")
-        console.log(JSON.stringify(this.state.todos))
         fetch('http://localhost:50806/api/TodoItem/batch',{
             mode: 'cors',
             method: 'PUT',
