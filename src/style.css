@@ -1,5 +1,6 @@
 .p1 {
     color: white;
+    font-size: 25px;
 }
 .p2 {
     text-align: center;
@@ -9,7 +10,7 @@
 }
 .header {
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
     color: white;
     background-color: rgb(160, 160, 160);
@@ -45,4 +46,17 @@ body {
 
 .divbg {
     margin-top: 0px;
+}
+
+.button {
+  background-color: rgb(53, 52, 52);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  border: solid white;
+  border-width: 1px;
 }
