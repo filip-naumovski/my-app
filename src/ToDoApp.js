@@ -56,11 +56,11 @@ class ToDoApp extends React.Component{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                id : 0,
                 chore : newChore,
                 status : false
             })
         })
-
     }
 
     textChange = (event) => {
@@ -83,7 +83,7 @@ class ToDoApp extends React.Component{
             <hr />
             <form onSubmit={this.textSubmit}>
                 <input type="text" onChange={this.textChange} value={this.state.textBoxValue} placeholder="Add new chore." name="textBoxValue"/>
-                <button type="submit">Add</button>
+                <input type="submit" value="Add" />
             </form>
         </div>
         )   
