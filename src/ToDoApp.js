@@ -6,12 +6,14 @@ class ToDoApp extends React.Component{
     constructor(){
         super()
         this.state = {
-            todos : []
+            todos : [],
+            textBoxValue : ""
         }
     }
     componentDidMount(){
         fetch('http://localhost:50806/api/TodoItem',{
-            mode: 'cors'
+            mode: 'cors',
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data => this.setState({
@@ -44,6 +46,30 @@ class ToDoApp extends React.Component{
             body: JSON.stringify(this.state.todos)
         })
     }
+
+    textSubmit = () => {
+        const newChore = this.state.textBoxValue
+        fetch('http://localhost:50806/api/TodoItem',{
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id : 0,
+                chore : newChore,
+                status : false
+            })
+        })
+    }
+
+    textChange = (event) => {
+        const {name, value} = event.target
+        this.setState({
+            [name] : value
+        })
+    }
+
     
     render(){
         const itemComponents = this.state.todos.map(item =>{
@@ -54,6 +80,11 @@ class ToDoApp extends React.Component{
             <h1 className="header">To-do list</h1>
             {itemComponents}
             <button style={{cursor: "pointer"}} className="button" onClick={this.handleSubmit}>Submit</button>
+            <hr />
+            <form onSubmit={this.textSubmit}>
+                <input type="text" onChange={this.textChange} value={this.state.textBoxValue} placeholder="Add new chore." name="textBoxValue"/>
+                <input type="submit" value="Add" />
+            </form>
         </div>
         )   
     }
